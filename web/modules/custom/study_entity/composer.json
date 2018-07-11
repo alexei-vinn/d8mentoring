@@ -1,0 +1,14 @@
+{
+  "name": "drupal/study_entity",
+  "type": "drupal-module",
+  "description": "Study Custom Entity",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/study_entity",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/study_entity",
+    "source": "http://cgit.drupalcode.org/study_entity"
+  },
+  "require": { }
+}
