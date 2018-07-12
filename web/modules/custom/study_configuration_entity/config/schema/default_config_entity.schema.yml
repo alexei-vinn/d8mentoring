@@ -1,0 +1,18 @@
+study_configuration_entity.default_config_entity.*:
+  type: config_entity
+  label: 'Default config entity config'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    uuid:
+      type: string
+    title:
+      type: string
+      label: 'Title'
+    description:
+      type: string
+      label: 'Description'

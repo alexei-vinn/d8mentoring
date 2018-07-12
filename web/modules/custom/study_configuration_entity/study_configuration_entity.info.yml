@@ -1,0 +1,5 @@
+name: 'study_configuration_entity'
+type: module
+description: 'Study: Configuration Entity'
+core: 8.x
+package: 'Custom'

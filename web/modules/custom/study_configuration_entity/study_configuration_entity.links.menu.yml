@@ -1,0 +1,9 @@
+
+# Default config entity menu items definition
+entity.default_config_entity.collection:
+  title: 'Default config entity'
+  route_name: entity.default_config_entity.collection
+  description: 'List Default config entity (bundles)'
+  parent: system.admin_structure
+  weight: 99
+

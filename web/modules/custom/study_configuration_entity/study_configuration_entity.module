@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains study_configuration_entity.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function study_configuration_entity_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the study_configuration_entity module.
+    case 'help.page.study_configuration_entity':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Study: Configuration Entity') . '</p>';
+      return $output;
+
+    default:
+  }
+}
