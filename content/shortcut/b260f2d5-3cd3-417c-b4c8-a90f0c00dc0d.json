@@ -1,0 +1,50 @@
+{
+    "_links": {
+        "self": {
+            "href": "http:\/\/default\/admin\/config\/user-interface\/shortcut\/link\/3?_format=hal_json"
+        },
+        "type": {
+            "href": "http:\/\/drupal.org\/rest\/type\/shortcut\/default"
+        }
+    },
+    "id": [
+        {
+            "value": 3
+        }
+    ],
+    "uuid": [
+        {
+            "value": "b260f2d5-3cd3-417c-b4c8-a90f0c00dc0d"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en",
+            "lang": "en"
+        }
+    ],
+    "shortcut_set": [
+        {
+            "target_id": "default"
+        }
+    ],
+    "title": [
+        {
+            "value": "Update",
+            "lang": "en"
+        }
+    ],
+    "link": [
+        {
+            "uri": "internal:\/admin\/modules\/update",
+            "title": null,
+            "options": []
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true,
+            "lang": "en"
+        }
+    ]
+}

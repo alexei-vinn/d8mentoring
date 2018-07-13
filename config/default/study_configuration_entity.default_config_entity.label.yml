@@ -1,0 +1,8 @@
+uuid: 2dbac7e2-7794-4873-aadb-90b6173ab644
+langcode: en
+status: true
+dependencies: {  }
+id: label
+label: Label
+title: 'Lorem title'
+description: Description
