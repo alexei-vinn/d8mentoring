@@ -1,0 +1,20 @@
+uuid: 7f816d62-4f44-431d-84e9-c45f7f8f4b9a
+langcode: en
+status: true
+dependencies:
+  module:
+    - study_blocks
+  theme:
+    - bartik
+id: defaultblock
+theme: bartik
+region: sidebar_first
+weight: -7
+provider: null
+plugin: default_block
+settings:
+  id: default_block
+  label: 'Default block'
+  provider: study_blocks
+  label_display: visible
+visibility: {  }
