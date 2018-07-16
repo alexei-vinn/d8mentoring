@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains study_blocks.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function study_blocks_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the study_blocks module.
+    case 'help.page.study_blocks':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Study Blocks API') . '</p>';
+      return $output;
+
+    default:
+  }
+}

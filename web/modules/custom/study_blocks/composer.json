@@ -1,0 +1,14 @@
+{
+  "name": "drupal/study_blocks",
+  "type": "drupal-module",
+  "description": "Study Blocks API",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/study_blocks",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/study_blocks",
+    "source": "http://cgit.drupalcode.org/study_blocks"
+  },
+  "require": { }
+}
