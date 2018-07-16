@@ -1,0 +1,14 @@
+{
+  "name": "drupal/field_api",
+  "type": "drupal-module",
+  "description": "Field API mentoring programm description",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/field_api",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/field_api",
+    "source": "http://cgit.drupalcode.org/field_api"
+  },
+  "require": { }
+}
