@@ -54,9 +54,7 @@ class DefaultBlock extends BlockBase implements ContainerFactoryPluginInterface 
       ->execute();
     $entities = $this->MyEntityStorage->loadMultiple($ids);
     $items = array();
-
     $build = [];
-
     foreach ($entities as $index=>$entity) {
       if ($entity->hasField('field_referenced_article') && $entity->getFieldDefinition('field_referenced_article')->getType() == 'entity_reference') {
         if (!empty($entity->get('field_referenced_article')->getValue()[0]['target_id']) && $referenced = $this->NodeStorage->load($entity->get('field_referenced_article')->getValue()[0]['target_id'])) {
@@ -72,8 +70,6 @@ class DefaultBlock extends BlockBase implements ContainerFactoryPluginInterface 
       }
 
     }
-
-    dsm($items);
     $build['default_block'] = array(
       '#theme' => 'item_list',
       '#items' => $items['name']
