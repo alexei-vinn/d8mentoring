@@ -35,18 +35,19 @@ class DefaultWidget extends WidgetBase {
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $elements = [];
 
-    $elements['size'] = [
+    $elements['start_date'] = [
       '#type' => 'number',
-      '#title' => t('Size of textfield'),
-      '#default_value' => $this->getSetting('size'),
+      '#title' => t('Start date'),
+      '#default_value' => $this->getSetting('start_date'),
       '#required' => TRUE,
       '#min' => 1,
     ];
-    $elements['placeholder'] = [
-      '#type' => 'textfield',
-      '#title' => t('Placeholder'),
-      '#default_value' => $this->getSetting('placeholder'),
-      '#description' => t('Text that will be shown inside the field until a value is entered. This hint is usually a sample value or a brief description of the expected format.'),
+    $elements['end_date'] = [
+      '#type' => 'number',
+      '#title' => t('End date'),
+      '#default_value' => $this->getSetting('end_date'),
+      '#required' => TRUE,
+      '#min' => 1,
     ];
 
     return $elements;
@@ -70,14 +71,20 @@ class DefaultWidget extends WidgetBase {
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
-    $element['value'] = $element + [
+    $element['start_date'] = $element + [
       '#type' => 'textfield',
       '#default_value' => isset($items[$delta]->value) ? $items[$delta]->value : NULL,
       '#size' => $this->getSetting('size'),
       '#placeholder' => $this->getSetting('placeholder'),
       '#maxlength' => $this->getFieldSetting('max_length'),
     ];
-
+    $element['end_date'] = $element + [
+        '#type' => 'textfield',
+        '#default_value' => isset($items[$delta]->value) ? $items[$delta]->value : NULL,
+        '#size' => $this->getSetting('size'),
+        '#placeholder' => $this->getSetting('placeholder'),
+        '#maxlength' => $this->getFieldSetting('max_length'),
+      ];
     return $element;
   }
 

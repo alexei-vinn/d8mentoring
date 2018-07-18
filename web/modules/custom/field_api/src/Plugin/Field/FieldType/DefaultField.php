@@ -2,11 +2,8 @@
 
 namespace Drupal\field_api\Plugin\Field\FieldType;
 
-use Drupal\Component\Utility\Random;
-use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\TypedData\DataDefinition;
 
@@ -26,22 +23,17 @@ class DefaultField extends FieldItemBase {
   /**
    * {@inheritdoc}
    */
-  public static function defaultStorageSettings() {
-    return [
-      'max_length' => 255,
-      'is_ascii' => FALSE,
-      'case_sensitive' => FALSE,
-    ] + parent::defaultStorageSettings();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
     // Prevent early t() calls by using the TranslatableMarkup.
-    $properties['value'] = DataDefinition::create('string')
+  /*  $properties['value'] = DataDefinition::create('string')
       ->setLabel(new TranslatableMarkup('Text value'))
       ->setSetting('case_sensitive', $field_definition->getSetting('case_sensitive'))
+      ->setRequired(TRUE);*/
+    $properties['start_date'] = DataDefinition::create('timestamp')
+      ->setLabel(new TranslatableMarkup(('Start date')))
+    ->setRequired(TRUE);
+    $properties['end_date'] = DataDefinition::create('timestamp')
+      ->setLabel(new TranslatableMarkup(('End date')))
       ->setRequired(TRUE);
 
     return $properties;
@@ -53,75 +45,31 @@ class DefaultField extends FieldItemBase {
   public static function schema(FieldStorageDefinitionInterface $field_definition) {
     $schema = [
       'columns' => [
-        'value' => [
+       /* 'value' => [
           'type' => $field_definition->getSetting('is_ascii') === TRUE ? 'varchar_ascii' : 'varchar',
           'length' => (int) $field_definition->getSetting('max_length'),
           'binary' => $field_definition->getSetting('case_sensitive'),
-        ],
+        ],*/
+       'start_date' => [
+         'description' => 'Start date description',
+         'type' => 'int'
+       ],
+        'end_date' => [
+          'description' => 'End date description',
+          'type' => 'int'
+        ]
       ],
     ];
-
     return $schema;
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getConstraints() {
-    $constraints = parent::getConstraints();
+  public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
 
-    if ($max_length = $this->getSetting('max_length')) {
-      $constraint_manager = \Drupal::typedDataManager()->getValidationConstraintManager();
-      $constraints[] = $constraint_manager->create('ComplexData', [
-        'value' => [
-          'Length' => [
-            'max' => $max_length,
-            'maxMessage' => t('%name: may not be longer than @max characters.', [
-              '%name' => $this->getFieldDefinition()->getLabel(),
-              '@max' => $max_length
-            ]),
-          ],
-        ],
-      ]);
-    }
+    $fields['default_field'] = BaseFieldDefinition::create('default_field')
+      ->setLabel(t('Default field label'))
+      ->setDescription(t('Default field description'));
 
-    return $constraints;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function generateSampleValue(FieldDefinitionInterface $field_definition) {
-    $random = new Random();
-    $values['value'] = $random->word(mt_rand(1, $field_definition->getSetting('max_length')));
-    return $values;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function storageSettingsForm(array &$form, FormStateInterface $form_state, $has_data) {
-    $elements = [];
-
-    $elements['max_length'] = [
-      '#type' => 'number',
-      '#title' => t('Maximum length'),
-      '#default_value' => $this->getSetting('max_length'),
-      '#required' => TRUE,
-      '#description' => t('The maximum length of the field in characters.'),
-      '#min' => 1,
-      '#disabled' => $has_data,
-    ];
-
-    return $elements;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function isEmpty() {
-    $value = $this->get('value')->getValue();
-    return $value === NULL || $value === '';
+    return $fields;
   }
 
 }
