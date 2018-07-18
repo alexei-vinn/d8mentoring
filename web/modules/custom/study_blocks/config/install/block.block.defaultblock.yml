@@ -10,9 +10,9 @@ theme: bartik
 region: sidebar_first
 weight: -7
 provider: null
-plugin: study_blocks_default_block
+plugin: default_block
 settings:
-  id: study_blocks_default_block
+  id: default_block
   label: 'Default block'
   provider: study_blocks
   label_display: visible

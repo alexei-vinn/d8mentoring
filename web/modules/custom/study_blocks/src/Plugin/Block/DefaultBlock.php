@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Provides a 'DefaultBlock' block.
  *
  * @Block(
- *  id = "default_block",
+ *  id = "study_blocks_default_block",
  *  admin_label = @Translation("Default block"),
  * )
  */
@@ -59,7 +59,7 @@ class DefaultBlock extends BlockBase implements ContainerFactoryPluginInterface 
         }
       }
     }
-    $build['default_block'] = array(
+    $build['study_blocks_default_block'] = array(
       '#theme' => 'item_list',
       '#items' => $items['name']
     );
