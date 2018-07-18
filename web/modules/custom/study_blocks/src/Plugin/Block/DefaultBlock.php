@@ -4,6 +4,7 @@ namespace Drupal\study_blocks\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -17,58 +18,46 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class DefaultBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
-
-  protected $MyEntityStorage;
-  protected $NodeStorage;
+  protected $entity_type_manager;
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityStorageInterface $entity_storage, EntityStorageInterface $node_storage)
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager)
   {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->MyEntityStorage = $entity_storage;
-    $this->NodeStorage = $node_storage;
+    $this->entity_type_manager = $entity_type_manager;
   }
-
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition)
   {
-    $storage = $container->get('entity.manager');
     return new static(
       $configuration, $plugin_id, $plugin_definition,
-      $storage->getStorage('default_entity'),
-      $storage->getStorage('node'));
+      $container->get('entity_type.manager')
+    );
   }
-
-
   /**
    * {@inheritdoc}
    */
   public function build() {
+    $ids = $this->entity_type_manager->getStorage('default_entity')->getQuery()->condition('status', 1)->execute();
+    $entities = $this->entity_type_manager->getStorage('default_entity')->loadMultiple($ids);
 
-    $ids = $this->MyEntityStorage->getQuery()
-      ->condition('status', 1)
-      ->execute();
-    $entities = $this->MyEntityStorage->loadMultiple($ids);
     $items = array();
     $build = [];
     foreach ($entities as $index=>$entity) {
       if ($entity->hasField('field_referenced_article') && $entity->getFieldDefinition('field_referenced_article')->getType() == 'entity_reference') {
-        if (!empty($entity->get('field_referenced_article')->getValue()[0]['target_id']) && $referenced = $this->NodeStorage->load($entity->get('field_referenced_article')->getValue()[0]['target_id'])) {
+        if (!empty($entity->get('field_referenced_article')->getValue()[0]['target_id']) && $referenced = $this->entity_type_manager->getStorage('node')->load($entity->get('field_referenced_article')->getValue()[0]['target_id'])) {
 
           if ($referenced->hasField('field_color') && !empty($referenced->get('field_color')->getValue()[0]['value'])) {
 
             $items['name'][$index] = $entity->get('name')->getValue()[0]['value'];
             $items['color'][$index] = $entity->get('field_referenced_article')->referencedEntities()[0]->get('field_color')->getValue()[0]['value'];
             }
-
         }
-
       }
-
     }
     $build['default_block'] = array(
       '#theme' => 'item_list',

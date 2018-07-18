@@ -1,4 +1,3 @@
-uuid: 8306ea1d-b698-44cb-9f27-844a97c5faf7
 langcode: en
 status: true
 dependencies:
@@ -9,11 +8,11 @@ dependencies:
 id: defaultblock
 theme: bartik
 region: sidebar_first
-weight: -5
+weight: -7
 provider: null
-plugin: default_block
+plugin: study_blocks_default_block
 settings:
-  id: default_block
+  id: study_blocks_default_block
   label: 'Default block'
   provider: study_blocks
   label_display: visible
