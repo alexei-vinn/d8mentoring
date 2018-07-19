@@ -14,8 +14,7 @@ use Drupal\Core\TypedData\DataDefinition;
  *   id = "default_field",
  *   label = @Translation("Default field"),
  *   description = @Translation("My Field Type"),
- *   default_widget = "default_widget",
- *   default_formatter = "default_formatter"
+ *   default_widget = "default_widget"
  * )
  */
 class DefaultField extends FieldItemBase {
@@ -45,11 +44,6 @@ class DefaultField extends FieldItemBase {
   public static function schema(FieldStorageDefinitionInterface $field_definition) {
     $schema = [
       'columns' => [
-       /* 'value' => [
-          'type' => $field_definition->getSetting('is_ascii') === TRUE ? 'varchar_ascii' : 'varchar',
-          'length' => (int) $field_definition->getSetting('max_length'),
-          'binary' => $field_definition->getSetting('case_sensitive'),
-        ],*/
        'start_date' => [
          'description' => 'Start date description',
          'type' => 'int'
@@ -59,9 +53,26 @@ class DefaultField extends FieldItemBase {
           'type' => 'int'
         ]
       ],
+      'indexes' => []
     ];
     return $schema;
   }
+
+  /**
+   * Define when the field type is empty.
+   *
+   * This method is important and used internally by Drupal. Take a moment
+   * to define when the field fype must be considered empty.
+   */
+  public function isEmpty() {
+
+    $isEmpty =
+      empty($this->get('start_date')->getValue()) &&
+      empty($this->get('end_date')->getValue());
+
+    return $isEmpty;
+  }
+
 
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
 
